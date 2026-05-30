@@ -71,13 +71,13 @@ private:
     void Render();
 
     // Rendering helpers
-    void DrawBackground(ID2D1DeviceContext* dc, float w, float h);
-    void DrawHeader(ID2D1DeviceContext* dc, float w, float& y);
-    void DrawConnectedSection(ID2D1DeviceContext* dc, float w, float& y);
-    void DrawVolumeSlider(ID2D1DeviceContext* dc, float w, float& y);
-    void DrawDivider(ID2D1DeviceContext* dc, float w, float& y);
-    void DrawOtherDevices(ID2D1DeviceContext* dc, float w, float& y);
-    void DrawFooter(ID2D1DeviceContext* dc, float w, float& y);
+    void DrawBackground(ID2D1HwndRenderTarget* dc, float w, float h);
+    void DrawHeader(ID2D1HwndRenderTarget* dc, float w, float& y);
+    void DrawConnectedSection(ID2D1HwndRenderTarget* dc, float w, float& y);
+    void DrawVolumeSlider(ID2D1HwndRenderTarget* dc, float w, float& y);
+    void DrawDivider(ID2D1HwndRenderTarget* dc, float w, float& y);
+    void DrawOtherDevices(ID2D1HwndRenderTarget* dc, float w, float& y);
+    void DrawFooter(ID2D1HwndRenderTarget* dc, float w, float& y);
 
     // Layout helpers
     int  ComputeWindowHeight() const;
