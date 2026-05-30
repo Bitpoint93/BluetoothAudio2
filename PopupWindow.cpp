@@ -545,7 +545,7 @@ void PopupWindow::Render()
 
 // ── Individual drawing routines ─────────────────────────────
 
-void PopupWindow::DrawBackground(ID2D1DeviceContext* dc, float w, float h)
+void PopupWindow::DrawBackground(ID2D1HwndRenderTarget* dc, float w, float h)
 {
     dc->Clear(D2D1::ColorF(0, 0));   // transparent (DWM composites)
     dc->FillRoundedRectangle(
@@ -553,7 +553,7 @@ void PopupWindow::DrawBackground(ID2D1DeviceContext* dc, float w, float h)
         m_brushBg.Get());
 }
 
-void PopupWindow::DrawHeader(ID2D1DeviceContext* dc, float w, float& y)
+void PopupWindow::DrawHeader(ID2D1HwndRenderTarget* dc, float w, float& y)
 {
     // App title
     auto rect = RectF(kPaddingX, y, w - kPaddingX, y + kHeaderH);
@@ -562,7 +562,7 @@ void PopupWindow::DrawHeader(ID2D1DeviceContext* dc, float w, float& y)
     y += kHeaderH;
 }
 
-void PopupWindow::DrawConnectedSection(ID2D1DeviceContext* dc, float w, float& y)
+void PopupWindow::DrawConnectedSection(ID2D1HwndRenderTarget* dc, float w, float& y)
 {
     // Surface card
     dc->FillRoundedRectangle(
@@ -595,7 +595,7 @@ void PopupWindow::DrawConnectedSection(ID2D1DeviceContext* dc, float w, float& y
     y += kConnectedH;
 }
 
-void PopupWindow::DrawVolumeSlider(ID2D1DeviceContext* dc, float w, float& y)
+void PopupWindow::DrawVolumeSlider(ID2D1HwndRenderTarget* dc, float w, float& y)
 {
     m_sliderY = y;
 
@@ -635,14 +635,14 @@ void PopupWindow::DrawVolumeSlider(ID2D1DeviceContext* dc, float w, float& y)
     y += kSliderH;
 }
 
-void PopupWindow::DrawDivider(ID2D1DeviceContext* dc, float w, float& y)
+void PopupWindow::DrawDivider(ID2D1HwndRenderTarget* dc, float w, float& y)
 {
     dc->FillRectangle(RectF(kPaddingX, y, w - kPaddingX, y + kDividerH),
                       m_brushDivider.Get());
     y += kDividerH + 4.f;
 }
 
-void PopupWindow::DrawOtherDevices(ID2D1DeviceContext* dc, float w, float& y)
+void PopupWindow::DrawOtherDevices(ID2D1HwndRenderTarget* dc, float w, float& y)
 {
     // Section label
     dc->DrawText(L"OTHER DEVICES", 13,
@@ -682,7 +682,7 @@ void PopupWindow::DrawOtherDevices(ID2D1DeviceContext* dc, float w, float& y)
     y += m_otherIds.size() * kDeviceRowH;
 }
 
-void PopupWindow::DrawFooter(ID2D1DeviceContext* dc, float w, float& y)
+void PopupWindow::DrawFooter(ID2D1HwndRenderTarget* dc, float w, float& y)
 {
     m_footerY = y;
 
