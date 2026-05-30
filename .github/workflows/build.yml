@@ -2,7 +2,7 @@ name: Build BTAudioReceiver
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   workflow_dispatch:
 
 jobs:
@@ -10,35 +10,38 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
 
-    - name: Download original icon from upstream
-      shell: pwsh
-      run: |
-        Invoke-WebRequest `
-          -Uri "https://github.com/ysc3839/AudioPlaybackConnector/raw/master/AudioPlaybackConnector.ico" `
-          -OutFile "AudioPlaybackConnector.ico"
+      - name: Download original icon from upstream
+        shell: pwsh
+        run: |
+          Invoke-WebRequest `
+            -Uri "https://github.com/ysc3839/AudioPlaybackConnector/raw/master/AudioPlaybackConnector.ico" `
+            -OutFile "AudioPlaybackConnector.ico"
 
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
 
-    - name: Restore NuGet packages
-      shell: pwsh
-      run: |
-        nuget restore AudioPlaybackConnector.sln
+      - name: Restore NuGet packages
+        shell: pwsh
+        run: nuget restore AudioPlaybackConnector.sln
 
-    - name: Build Release x64
-      run: |
-        msbuild AudioPlaybackConnector.sln `
-          /p:Configuration=Release `
-          /p:Platform=x64 `
-          /m `
-          /nologo
+      - name: Build Release x64
+        shell: pwsh
+        run: |
+          msbuild AudioPlaybackConnector.sln /p:Configuration=Release /p:Platform=x64 /m /nologo
 
-    - name: Upload exe artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: BTAudioReceiver-x64
-        path: x64/Release/BTAudioReceiver.exe
-        if-no-files-found: error
+      - name: Find built executable
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse -Filter *.exe | Select-Object FullName
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: BTAudioReceiver-x64
+          path: |
+            **/BTAudioReceiver.exe
+            **/*.exe
+          if-no-files-found: error
