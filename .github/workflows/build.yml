@@ -1,5 +1,5 @@
 git init
    git add .
    git commit -m "BT Audio Receiver Phase 2"
-   git remote add origin https://github.com/YOUR_NAME/YOUR_REPO.git
+   git remote add origin https://github.com/Bitpoint93/BluetoothAudio2
    git push -u origin main
