@@ -1,5 +1,44 @@
-git init
-   git add .
-   git commit -m "BT Audio Receiver Phase 2"
-   git remote add origin https://github.com/Bitpoint93/BluetoothAudio2
-   git push -u origin main
+name: Build BTAudioReceiver
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Download original icon from upstream
+      shell: pwsh
+      run: |
+        Invoke-WebRequest `
+          -Uri "https://github.com/ysc3839/AudioPlaybackConnector/raw/master/AudioPlaybackConnector.ico" `
+          -OutFile "AudioPlaybackConnector.ico"
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restore NuGet packages
+      shell: pwsh
+      run: |
+        nuget restore AudioPlaybackConnector.sln
+
+    - name: Build Release x64
+      run: |
+        msbuild AudioPlaybackConnector.sln `
+          /p:Configuration=Release `
+          /p:Platform=x64 `
+          /m `
+          /nologo
+
+    - name: Upload exe artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: BTAudioReceiver-x64
+        path: x64/Release/BTAudioReceiver.exe
+        if-no-files-found: error
