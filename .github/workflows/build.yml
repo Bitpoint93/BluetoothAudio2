@@ -27,11 +27,14 @@ jobs:
         shell: pwsh
         run: nuget restore AudioPlaybackConnector.sln
 
-      - name: Build Release x64
-        shell: pwsh
-        run: |
-          msbuild AudioPlaybackConnector.sln /p:Configuration=Release /p:Platform=x64 /m /nologo
-
+     - name: Build Release x64
+  shell: pwsh
+  run: |
+    msbuild AudioPlaybackConnector.sln `
+      /p:Configuration=Release `
+      /p:Platform=x64 `
+      /m `
+      /verbosity:detailed
       - name: Find built executable
         shell: pwsh
         run: |
