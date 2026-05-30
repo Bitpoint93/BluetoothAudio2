@@ -1,0 +1,6 @@
+// AudioPlaybackConnector.rc
+#include "resource.h"
+#include <windows.h>
+
+IDI_APPICON    ICON    "AudioPlaybackConnector.ico"
+IDR_MANIFEST   RT_MANIFEST    "AudioPlaybackConnector.manifest"
